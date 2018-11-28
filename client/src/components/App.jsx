@@ -30,7 +30,7 @@ export default class App extends React.Component {
 
   getCurrentItem(cb, id) {
     fetch(
-      `http://trailblazer-pc.us-east-2.elasticbeanstalk.com/product/data/${id}`
+      `http://localhost:3000/product/data/${id}`
     )
       .then(res => res.json())
       .then(data => cb("currentItem", data))
@@ -38,14 +38,14 @@ export default class App extends React.Component {
   }
 
   getTentData(cb) {
-    fetch("http://trailblazer-pc.us-east-2.elasticbeanstalk.com/data/tents")
+    fetch("http://localhost:3000/data/tents")
       .then(res => res.json())
       .then(data => cb("tents", data))
       .catch(error => console.error(error));
   }
 
   getShirtData(cb) {
-    fetch("http://trailblazer-pc.us-east-2.elasticbeanstalk.com/data/shirts")
+    fetch("http://localhost:3000/data/shirts")
       .then(res => res.json())
       .then(data => cb("shirts", data))
       .catch(error => console.error(error));
