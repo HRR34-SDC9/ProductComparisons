@@ -1,7 +1,10 @@
+require('newrelic');
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
-const { Tent, Shirt } = require("../db/index.js");
+const mariadb = require("mariadb");
+
+const pool = mariadb.createPool({host: 'localhost', user:'root', database: 'trailblazer', connectionLimit: 5});
 
 const app = express();
 app.use(bodyParser.json());
@@ -15,6 +18,7 @@ app.use((req, res, next) => {
   );
   next();
 });
+
 // Routes-Endpoints
 app.get("/product/:id", (req, res) => {
   const file = path.join(`${__dirname}/../client/dist/index.html`);
@@ -22,34 +26,57 @@ app.get("/product/:id", (req, res) => {
 });
 
 app.get("/product/data/:id", (req, res) => {
-  const { id } = req.params;
-  const model = id <= 51 ? Tent : Shirt;
-
-  model
-    .find({ _id: id })
-    .exec()
-    .then(item => res.status(200).send(item))
-    .catch(err => console.log("error", err));
+  let productId = req.params.id;
+  pool.getConnection()
+  .then(conn => {
+    let query = '';
+    if (productId <= 51)
+      query = `SELECT * from trailblazer.tents where id=${productId}`;
+    else
+      query = `SELECT * from trailblazer.shirts where id=${productId}`; 
+    conn.query(query)                                                                                                                             
+    .then(result => {             
+        res.status(200).send(result);
+        conn.end();
+    })
+    .catch(() => {
+      res.status(400).send('could not find tent with id ${productId}.');
+      conn.end();
+    })
+  })
+  .catch(() => {
+    res.status(400).send('could not connect to database');
+  })
 });
 
 app.get("/data/shirts", (req, res) => {
-  Shirt.aggregate([{ $sample: { size: 4 } }]).exec((err, data) => {
-    if (err) {
-      console.log("Server Error", err);
-    } else {
-      res.status(200).send(data);
-    }
-  });
+  pool.getConnection()
+  .then(conn => {
+    conn.query(`SELECT * from trailblazer.shirts limit 4`)                                                                                                                             
+    .then(result => {                          
+      res.status(200).send(result);
+      conn.end();
+    })
+    .catch(() => {
+      res.status(400).send('could not find shirts.');
+      conn.end();
+    })
+  })
 });
 
 app.get("/data/tents", (req, res) => {
-  Tent.aggregate([{ $sample: { size: 5 } }]).exec((err, data) => {
-    if (err) {
-      console.log("Server Error", err);
-    } else {
-      res.status(200).send(data);
-    }
-  });
+  pool.getConnection()
+  .then(conn => {
+    conn.query(`SELECT * from trailblazer.tents limit 5`)                                                                                                                             
+    .then(result => {                 
+      res.status(200).send(result);
+      conn.end();
+    })
+    .catch(() => {
+      res.status(400).send('could not find tents.');
+      conn.end();
+    })
+  })
 });
 
 const port = process.env.PORT || 3000;
