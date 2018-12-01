@@ -46,6 +46,7 @@ app.get("/product/data/:id", (req, res) => {
   })
   .catch(() => {
     res.status(400).send('could not connect to database');
+    conn.end();
   })
 });
 
@@ -62,6 +63,10 @@ app.get("/data/shirts", (req, res) => {
       conn.end();
     })
   })
+  .catch(() => {
+    res.status(400).send('could not retrieve shirts');
+    conn.end();
+  })
 });
 
 app.get("/data/tents", (req, res) => {
@@ -76,6 +81,10 @@ app.get("/data/tents", (req, res) => {
       res.status(400).send('could not find tents.');
       conn.end();
     })
+  })
+  .catch(() => {
+    res.status(400).send('could not retrieve tents');
+    conn.end();
   })
 });
 
