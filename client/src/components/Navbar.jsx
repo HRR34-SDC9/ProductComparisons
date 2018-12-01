@@ -51,7 +51,7 @@ class Navbar extends React.Component {
           <div className="nav__navShop">
             <div className="nav__navShop-logo">
               <img
-                src="https://s3-us-west-2.amazonaws.com/fec-project/logo/TrailblazerLogo.png"
+                src="../../client/dist/TrailblazerLogo.png"
                 alt="Trailblazer logo"
               />
             </div>
