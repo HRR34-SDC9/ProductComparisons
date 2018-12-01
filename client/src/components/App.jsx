@@ -5,6 +5,8 @@ import Tents from "./Tents";
 import Shirts from "./Shirts";
 import "unfetch/polyfill"; // This is required for jest tests. Node does not understand the fetch method until you download npm unfetch.
 
+const address = `http://ec2-34-205-62-91.compute-1.amazonaws.com:3000`;
+
 export default class App extends React.Component {
   constructor() {
     super();
@@ -30,7 +32,7 @@ export default class App extends React.Component {
 
   getCurrentItem(cb, id) {
     fetch(
-      `http://localhost:3000/product/data/${id}`
+      `${address}/product/data/${id}`
     )
       .then(res => res.json())
       .then(data => cb("currentItem", data))
@@ -38,14 +40,14 @@ export default class App extends React.Component {
   }
 
   getTentData(cb) {
-    fetch("http://localhost:3000/data/tents")
+    fetch(`${address}/data/tents`)
       .then(res => res.json())
       .then(data => cb("tents", data))
       .catch(error => console.error(error));
   }
 
   getShirtData(cb) {
-    fetch("http://localhost:3000/data/shirts")
+    fetch(`${address}/data/shirts`)
       .then(res => res.json())
       .then(data => cb("shirts", data))
       .catch(error => console.error(error));
