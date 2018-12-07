@@ -5,7 +5,7 @@ import Tents from "./Tents";
 import Shirts from "./Shirts";
 import "unfetch/polyfill"; // This is required for jest tests. Node does not understand the fetch method until you download npm unfetch.
 
-const address = `http://ec2-34-205-62-91.compute-1.amazonaws.com:3000`;
+const address = `http://ec2-52-207-213-48.compute-1.amazonaws.com:3000`;
 
 export default class App extends React.Component {
   constructor() {
