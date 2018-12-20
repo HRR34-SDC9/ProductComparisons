@@ -2,17 +2,11 @@
 
 > Modification of a server and database to handle large quantities of data and traffic.
 
-
-## Table of Contents
-
-1. [Requirements](#requirements)
-2. [Development](#development)
-
 ## Requirements
 
 - Node >= 6.13.0
-
-## Development
+- Apache Cassandra(https://www.datastax.com/2012/01/working-with-apache-cassandra-on-mac-os-x)
+- MariaDB(https://mariadb.com/kb/en/library/installing-mariadb-on-macos-using-homebrew/)
 
 ### Installing Dependencies
 
