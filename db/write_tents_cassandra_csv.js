@@ -4,7 +4,7 @@ const faker = require('faker');
 const printer = () => {
     const file = fs.createWriteStream(__dirname + '/tents_cassandra.csv');
     let i = 0;
-    const MAX_LIM = 5000000;
+    const MAX_LIM = 5000000; //number of records to create
 
     file.write(`id, imageURL, title, ranking, reviews, price, sleepingCapacity, packagedWeight, numberOfDoors, bestUse, productType\n`);
     const writer = function () {

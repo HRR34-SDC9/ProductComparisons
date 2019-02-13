@@ -1,4 +1,4 @@
-
+//seed all records to cassandra database
 exports.seed = (knex, Promise) => {
   return knex('tents').truncate()
     .then(() => {

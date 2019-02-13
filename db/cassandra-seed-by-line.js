@@ -5,6 +5,7 @@ const fs = require('fs');
 var readline = require('readline');
 var stream = require('stream');
 
+//cassandra set up
 const options = {
     contactPoints: ['localhost'],
     pooling: {
@@ -46,14 +47,14 @@ client.connect()
    process.exit();
 })
 .then(() => {
-    let start = new Date().getTime();
-    var count = 0;
+    let start = new Date().getTime();//start time of process
+    var count = 0; //number of inserts
     var instream = fs.createReadStream(__dirname + '/inserts.csv');
     var outstream = new stream;
     var rl = readline.createInterface(instream, outstream);
     rl.on('line', async(line) => {
         let end = new Date().getTime();
-        await client.execute(line)
+        await client.execute(line) //wait for record to be inserted
         .catch((err) => {
             console.log(err);
             process.exit();

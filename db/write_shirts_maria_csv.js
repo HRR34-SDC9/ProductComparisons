@@ -4,7 +4,7 @@ const faker = require('faker');
 const printer = () => {
     const file = fs.createWriteStream(__dirname + '/shirts_maria.csv');
     let i = 0;
-    const MAX_LIM = 5000000;
+    const MAX_LIM = 5000000; //number of records to create
 
     const writer = function () {
         let result = true;

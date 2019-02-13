@@ -9,15 +9,18 @@ client.connect((err) => {
     console.log('cassandra connected')
 });
 
+//create new keyspace
 const db = "create keyspace if not exists trailblazer with replication = " + 
            "{'class':'SimpleStrategy','replication_factor':3}";
 
+//create table for tents          
 const createTents = `create table if not exists trailblazer.tents (id int,`+ 
                     `"imageURL" text, title text, ranking double, reviews int, price double,`+ 
                     `"sleepingCapacity" text, "packagedWeight" text, "numberOfDoors" int,`+ 
                     `"bestUse" text, "productType" text, ` +
                     `PRIMARY KEY ((title, "bestUse"), id))`;
 
+//create table for shirts 
 const createShirts = `create table if not exists trailblazer.shirts (id int,`+ 
                       `"imageURL" text, title text, ranking double,`+ 
                       `reviews int, price double, "productType" text, ` +

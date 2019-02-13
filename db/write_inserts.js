@@ -5,7 +5,7 @@ const fileName = __dirname + '/inserts.csv';
 const printer = () => {
     const file = fs.createWriteStream(fileName);
     let i = 0;
-    const MAX_LIM = 5000000;
+    const MAX_LIM = 5000000; //number of records per table
 
     let start = new Date().getTime();
     const writer = function () {
@@ -47,7 +47,7 @@ const printer = () => {
         file.once('drain', writer);
     }
     let end = new Date().getTime();
-    console.log((end - start)/1000 +' seconds');
+    console.log((end - start)/1000 +' seconds');//keep track of time to create records
     return writer;
   }
   
